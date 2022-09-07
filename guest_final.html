@@ -1,0 +1,85 @@
+<html>
+<head>
+
+<title>Individual Project</title>
+</head>
+<?php
+
+if(isset($_POST['add']))
+{
+$dbhost = 'localhost';
+$dbuser = 'root';
+$dbpass = '1234';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass );
+if(! $conn )
+{
+die('Could not connect: ' . mysql_error());
+}
+if (function_exists(‘get_magic_quotes_gpc’) && get_magic_quotes_gpc()) 
+{
+$Name = addslashes ($_POST['Name']);
+$location = addslashes ($_POST['location']);
+$feedback = addslashes ($_POST['feedback']);
+
+}
+else
+{
+$Name =  $_POST['Name'];
+$location = $_POST['location'];
+$feedback = $_POST['feedback'];
+
+}
+$sql = "INSERT INTO ind_tbl ".
+"(Name,location,feedback) ".
+"VALUES".
+"('$Name','$location','$feedback') ";
+mysql_select_db( 'student' );
+$retval = mysql_query($sql, $conn );
+if(! $retval )
+{
+die('Could not create table: ' . mysql_error());
+}
+echo "\t Data Saved Successfully\n";
+
+mysql_close($conn);
+}
+else
+{
+
+
+?>
+
+<div class="background">
+  <div class="transbox">
+<center><form method="post" action="<?php $_PHP_SELF ?>">
+<table width="550" border="0" cellspacing="6" cellpadding="4">
+<tr>
+<td width="350"><font Color="#618685" size = 5> <b> Name </u></b> </td>
+<td>
+<input name="Name" type="text" id="Name">
+</td>
+</tr>
+<tr>
+<td width="350"><font Color="#618685" size = 5><b> Location</u></b></td>
+<td>
+<input name="location" type="text" id="location">
+<tr>
+<td width="350"></td>
+<td></td>
+</tr>
+<tr>
+<td width="350"><font Color="#618685" size = 5> <b>Feedback<b></u></td>
+<td>
+<textarea rows="4" cols="50" name="feedback" type="text" id="feedback"></textarea>
+</td>
+</tr>
+<tr>
+<tr>
+  <td>&nbsp;</td>
+ <tr>
+<td colspan="2">
+	<?php
+}
+?>
+</body>
+<html>
